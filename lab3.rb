@@ -17,37 +17,39 @@ require_relative "history"   # uncomment to load history.rb
 # Method to display a welcome message
 def welcome_message
 	puts "Welcome to Rock, Paper, Scissors, Lizard, Spock!"
-  end
+end
   
-  # Method to prompt the user to select a player
-  def select_player(player_number)
-	puts "Please choose Player #{player_number}:"
+# Method to prompt the user to select a player
+def select_player(player_number)
+	puts "\nPlease choose #{player_number}:"
 	puts "(1) StupidBot"
 	puts "(2) RandomBot"
 	puts "(3) IterativeBot"
 	puts "(4) LastPlayBot"
 	puts "(5) Human"
-	print "Select player #{player_number}: "
+	# print "Select player #{player_number}: \n"
+
 	choice = gets.chomp.to_i
 	case choice
 	when 1
-	  StupidBot.new('StupidBot', History.new)
+	  	StupidBot.new('StupidBot', History.new)
 	when 2
-	  RandomBot.new('RandomBot', History.new)
+	  	RandomBot.new('RandomBot', History.new)
 	when 3
-	  IterativeBot.new('IterativeBot', History.new)
+	  	IterativeBot.new('IterativeBot', History.new)
 	when 4
-	  LastPlayBot.new('LastPlayBot', History.new)
+	  	LastPlayBot.new('LastPlayBot', History.new)
 	when 5
-	  HumanPlayer.new('Human', History.new)
+	  	HumanPlayer.new('Human', History.new)
 	else
-	  puts "Invalid choice - start over"
-	  select_player(player_number)
+	  	puts "Invalid choice - start over"
+	  	select_player(player_number)
 	end
-  end
+	# puts "#{player1.name} vs. #{player2.name}"
+end
   
-  # Method to play a single round of the game
-  def play_round(player1, player2, round_number)
+# Method to play a single round of the game
+def play_round(player1, player2, round_number)
 	puts "\nRound #{round_number}:"
 	move1 = player1.play
 	move2 = player2.play
@@ -57,34 +59,34 @@ def welcome_message
 	puts "#{result}"
 	puts "Player #{outcome == 'Tie' ? '1 and 2' : outcome} #{outcome == 'Tie' ? 'both' : 'won'} the round"
 	outcome
-  end
+end
   
-  # Method to play the game for a specified number of rounds
-  def game(rounds)
+# Method to play the game for a specified number of rounds
+def game(rounds)
 	welcome_message
 	player1 = select_player(1)
+	puts "Select player 1: #{player1.name}"
 	player2 = select_player(2)
+	puts "Select player 2: #{player2.name}"
 	
 	score_player1 = 0
 	score_player2 = 0
 	
 	rounds.times do |round|
-	  puts "\nRound #{round + 1}:"
-	  puts ""
-	  result = play_round(player1, player2, round + 1)
-	  score_player1 += 1 if result == 'Win'
-	  score_player2 += 1 if result == 'Lose'
+		result = play_round(player1, player2, round + 1)
+		score_player1 += 1 if result == 'Win'
+		score_player2 += 1 if result == 'Lose'
 	end
 	
 	puts "\nFinal score is #{score_player1} to #{score_player2}"
 	if score_player1 == score_player2
-	  puts "Game was a draw"
+	  	puts "Game was a draw"
 	elsif score_player1 > score_player2
-	  puts "Player 1 won the game"
+	  	puts "Player 1 won the game"
 	else
-	  puts "Player 2 won the game"
+	  	puts "Player 2 won the game"
 	end
-  end
+end
 
 
 # Main Program (should be last)
