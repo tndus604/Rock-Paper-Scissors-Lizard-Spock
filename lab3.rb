@@ -21,12 +21,12 @@ end
   
 # Method to prompt the user to select a player
 def select_player(player_number)
-	puts "\nPlease choose #{player_number}:"
-	puts "(1) StupidBot"
-	puts "(2) RandomBot"
-	puts "(3) IterativeBot"
-	puts "(4) LastPlayBot"
-	puts "(5) Human"
+	# puts "\nPlease choose player #{player_number}:"
+	# puts "(1) StupidBot"
+	# puts "(2) RandomBot"
+	# puts "(3) IterativeBot"
+	# puts "(4) LastPlayBot"
+	# puts "(5) Human"
 	# print "Select player #{player_number}: \n"
 
 	choice = gets.chomp.to_i
@@ -57,18 +57,29 @@ def play_round(player1, player2, round_number)
 	puts "Player 2 chose #{move2.name}"
 	result, outcome = move1.compare_to(move2)
 	puts "#{result}"
-	puts "Player #{outcome == 'Tie' ? '1 and 2' : outcome} #{outcome == 'Tie' ? 'both' : 'won'} the round"
+	if outcome == 'Lose'
+		puts "Player 2 won the round"
+	elsif outcome == 'Win'
+		puts "Player 1 won the round"
+	else
+		puts "Round was a tie"
+	end
 	outcome
 end
   
 # Method to play the game for a specified number of rounds
 def game(rounds)
 	welcome_message
+	puts "\nPlease choose two players:"
+	puts "(1) StupidBot"
+	puts "(2) RandomBot"
+	puts "(3) IterativeBot"
+	puts "(4) LastPlayBot"
+	puts "(5) Human"
 	player1 = select_player(1)
-	puts "Select player 1: #{player1.name}"
 	player2 = select_player(2)
-	puts "Select player 2: #{player2.name}"
-	
+	puts "Select player 1: Select player 2: #{player1.name} vs. #{player2.name}"
+
 	score_player1 = 0
 	score_player2 = 0
 	
@@ -82,9 +93,9 @@ def game(rounds)
 	if score_player1 == score_player2
 	  	puts "Game was a draw"
 	elsif score_player1 > score_player2
-	  	puts "Player 1 won the game"
+	  	puts "Player 1 wins"
 	else
-	  	puts "Player 2 won the game"
+	  	puts "Player 2 wins"
 	end
 end
 
