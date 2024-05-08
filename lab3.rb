@@ -76,9 +76,11 @@ def game(rounds)
 	puts "(3) IterativeBot"
 	puts "(4) LastPlayBot"
 	puts "(5) Human"
+	print "Selct player 1: "
 	player1 = select_player(1)
+	print "Selct player 2: "
 	player2 = select_player(2)
-	puts "Select player 1: Select player 2: #{player1.name} vs. #{player2.name}"
+	puts "#{player1.name} vs. #{player2.name}"
 
 	score_player1 = 0
 	score_player2 = 0
