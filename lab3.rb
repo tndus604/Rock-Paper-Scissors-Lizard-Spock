@@ -20,15 +20,7 @@ def welcome_message
 end
   
 # Method to prompt the user to select a player
-def select_player(player_number)
-	# puts "\nPlease choose player #{player_number}:"
-	# puts "(1) StupidBot"
-	# puts "(2) RandomBot"
-	# puts "(3) IterativeBot"
-	# puts "(4) LastPlayBot"
-	# puts "(5) Human"
-	# print "Select player #{player_number}: \n"
-
+def select_player
 	choice = gets.chomp.to_i
 	case choice
 	when 1
@@ -42,11 +34,13 @@ def select_player(player_number)
 	when 5
 	  	HumanPlayer.new('Human', History.new)
 	else
-	  	puts "Invalid choice - start over"
-	  	select_player(player_number)
+	  	# puts "Invalid choice - start over"
+	  	# select_player(player_number)
+		return nil
 	end
 	# puts "#{player1.name} vs. #{player2.name}"
 end
+  
   
 # Method to play a single round of the game
 def play_round(player1, player2, round_number)
@@ -57,6 +51,11 @@ def play_round(player1, player2, round_number)
 	puts "Player 2 chose #{move2.name}"
 	result, outcome = move1.compare_to(move2)
 	puts "#{result}"
+
+	# Record the last moves if needed
+	player1.record_opponent_move(move2) if player1.respond_to?(:record_opponent_move)
+	player2.record_opponent_move(move1) if player2.respond_to?(:record_opponent_move)
+
 	if outcome == 'Lose'
 		puts "Player 2 won the round"
 	elsif outcome == 'Win'
@@ -76,11 +75,24 @@ def game(rounds)
 	puts "(3) IterativeBot"
 	puts "(4) LastPlayBot"
 	puts "(5) Human"
-	print "Selct player 1: "
-	player1 = select_player(1)
-	print "Selct player 2: "
-	player2 = select_player(2)
-	puts "#{player1.name} vs. #{player2.name}"
+
+
+	player1 = nil
+	player2 = nil
+  
+	until player1 && player2
+	  	print "Select player 1: "
+		player1 = select_player()
+		print "Select player 2: "
+		player2 = select_player()
+  
+		if player1.nil? || player2.nil?
+			puts "Invalid choice(s) - start over"
+		else
+			puts "#{player1.name} vs. #{player2.name}"
+		end
+	end
+
 
 	score_player1 = 0
 	score_player2 = 0

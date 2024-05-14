@@ -46,18 +46,25 @@ class IterativeBot < Player
 end
 
 class LastPlayBot < Player
-    def play
-        if @history.opponent_plays.empty?
-        move = $moves[0] # LastPlayBot starts with Rock
-        else
-        last_opponent_move = @history.opponent_plays.last
-        move_index = $moves.index(last_opponent_move)
-        move = $moves[(move_index + 1) % $moves.length] # Play the next move in the sequence
-        end
-        @history.log_play(move)
-        move
+    def initialize(name, history)
+      super(name, history)
+      @last_opponent_move = nil  # Initializes with no last move
+    end
+  
+    def play()
+      # Play the move that was last played by the opponent, default to Rock on the first move
+      move = @last_opponent_move || Rock.new("Rock")
+      @history.log_play(move)
+      move
+    end
+  
+    def record_opponent_move(move)
+      # Update the last move played by the opponent
+      @last_opponent_move = move
+      @history.log_opponent_play(move)
     end
 end
+  
 
 class HumanPlayer < Player
     def play
